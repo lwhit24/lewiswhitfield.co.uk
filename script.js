@@ -1,60 +1,59 @@
-const header = document.querySelector("[data-header]");
-const nav = document.querySelector("[data-nav]");
-const navToggle = document.querySelector("[data-nav-toggle]");
-const navLinks = [...document.querySelectorAll(".site-nav a")];
-const sections = [...document.querySelectorAll("main section[id]")];
-const revealItems = [...document.querySelectorAll(".reveal")];
+# Lewis Whitfield Portfolio
 
-function setHeaderState() {
-  header.classList.toggle("is-scrolled", window.scrollY > 12);
-}
+Modern personal portfolio website for Lewis Whitfield, focused on Data, AI, Automation, public sector delivery, projects, writing, testimonials, awards and certifications.
 
-function closeMenu() {
-  nav.classList.remove("is-open");
-  navToggle.classList.remove("is-open");
-  navToggle.setAttribute("aria-expanded", "false");
-}
+The site is built as a lightweight static website for GitHub Pages. It does not use a framework or build pipeline, so the live site is easy to maintain: edit the HTML/CSS/JavaScript files, commit the changes, and GitHub Pages republishes automatically.
 
-navToggle.addEventListener("click", () => {
-  const isOpen = nav.classList.toggle("is-open");
-  navToggle.classList.toggle("is-open", isOpen);
-  navToggle.setAttribute("aria-expanded", String(isOpen));
-});
+## Site Overview
 
-navLinks.forEach((link) => {
-  link.addEventListener("click", closeMenu);
-});
+The portfolio is structured around:
 
-const activeSectionObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+- A high-impact hero section for Lewis's current Data, AI and Automation positioning
+- About section with concise career highlights
+- Project carousel covering current LinkedIn-backed project work
+- Articles & Posts carousel linking to LinkedIn posts and external writing
+- Testimonials carousel with colleague and customer-facing recommendations
+- Honors & Awards carousel
+- Certifications carousel
+- Direct contact links for email, LinkedIn and GitHub
 
-      navLinks.forEach((link) => {
-        link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
-      });
-    });
-  },
-  {
-    rootMargin: "-42% 0px -50% 0px",
-    threshold: 0,
-  }
-);
+## Technology
 
-sections.forEach((section) => activeSectionObserver.observe(section));
+- Static HTML
+- CSS with responsive layouts and carousel styling
+- Small JavaScript layer for mobile navigation, active section highlighting, scroll reveal effects and carousel controls
+- Local image assets for reliable GitHub Pages hosting
 
-const revealObserver = new IntersectionObserver(
-  (entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
-    });
-  },
-  { threshold: 0.14 }
-);
+## Key Files
 
-revealItems.forEach((item) => revealObserver.observe(item));
+- `index.html` - website content and structure
+- `styles.css` - responsive visual design
+- `script.js` - interactions and carousel controls
+- `assets/` - local images and badges
 
-window.addEventListener("scroll", setHeaderState, { passive: true });
-setHeaderState();
+## Local Preview
+
+Open `index.html` in a browser, or serve the folder locally with a simple static server.
+
+Example:
+
+```bash
+python -m http.server 8080
+```
+
+Then open `http://127.0.0.1:8080/`.
+
+## GitHub Pages
+
+This site is designed to publish from the repository root using GitHub Pages.
+
+Recommended Pages settings:
+
+- Source: `Deploy from a branch`
+- Branch: `main`
+- Folder: `/root`
+- Custom domain: `lewiswhitfield.co.uk`
+
+## Updating The Site
+
+Edit the relevant content in `index.html`, adjust styling in `styles.css`, then commit the changed files to `main`. GitHub Pages will redeploy the site automatically.
